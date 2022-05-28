@@ -1,7 +1,7 @@
 import random
 
 
-def quick_sort(word):
+async def quick_sort(word):
     if len(word) <= 1:
         return word
     else:
@@ -14,4 +14,4 @@ def quick_sort(word):
                 right += elem
             else:
                 middle += elem
-    return quick_sort(left) + middle + quick_sort(right)
+    return await quick_sort(left) + middle + await quick_sort(right)
