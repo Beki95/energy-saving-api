@@ -1,3 +1,5 @@
+from typing import Union
+
 from pydantic import BaseModel
 
 
@@ -8,4 +10,4 @@ class AnagramScheme(BaseModel):
 
 class AnagramResponseScheme(BaseModel):
     status: bool = False
-    counter: int
+    counter: Union[int, None]
