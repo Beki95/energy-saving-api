@@ -1,20 +1,15 @@
 from fastapi import APIRouter
 from fastapi import Depends
 
-from apps.anagram.services import quick_sort
-from schemas.anagram import AnagramScheme, AnagramResponseScheme
+from apps.anagram.utils import Check, Checker, Count, Counter
+from schemas.anagram import AnagramResponseScheme
 
 anagram_router = APIRouter()
 
 
-def checking_for_anagram(words: AnagramScheme) \
-        -> AnagramResponseScheme:
-    response = {'counter': 0}
-    if quick_sort(words.f_word) == quick_sort(words.s_word):
-        response['status'] = True
-    return AnagramResponseScheme(**response)
-
-
 @anagram_router.post("/", response_model=AnagramResponseScheme)
-async def checking_for_anagram(check=Depends(checking_for_anagram)):
-    return check
+async def checking_for_anagram(checker: Check = Depends(Checker),
+                               counter: Count = Depends(Counter)):
+    status = await checker()
+    counter = await counter(status=status)
+    return AnagramResponseScheme(status=status, counter=counter)
