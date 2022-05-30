@@ -9,7 +9,7 @@ from db.redis.config import redis
 app = FastAPI()
 
 app.include_router(anagram_router, prefix='/checking_anagram', tags=['anagram'])
-app.include_router(devices_router, prefix='/create_device', tags=['device'])
+app.include_router(devices_router, prefix='/device', tags=['device'])
 
 
 @app.on_event('startup')
